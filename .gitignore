@@ -30,3 +30,7 @@ output/
 *.zip
 *.png
 *.docx
+scripts/ChIPQC*.R
+scripts/density_plots_peaks_FT*.R
+scripts/NA_motifs.txt
+scripts/peakAnnotation.R
