@@ -16,6 +16,7 @@ vignettes/*.html
 vignettes/*.pdf
 .httr-oauth
 .Renviron
+.Rproj
 
 # knitr and R markdown default cache directories
 *_cache/
@@ -32,5 +33,5 @@ output/
 *.docx
 scripts/ChIPQC*.R
 scripts/density_plots_peaks_FT*.R
-scripts/NA_motifs.txt
+scripts/NA_motifs.sh
 scripts/peakAnnotation.R
