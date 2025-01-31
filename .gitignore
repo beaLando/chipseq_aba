@@ -28,10 +28,9 @@ vignettes/*.pdf
 data/
 notes&writeup/
 output/
+LICENSE*
 *.zip
 *.png
 *.docx
-scripts/ChIPQC*.R
-scripts/density_plots_peaks_FT*.R
-scripts/NA_motifs.sh
-scripts/peakAnnotation.R
+scripts/NA_*.R
+scripts/NA_*.sh
