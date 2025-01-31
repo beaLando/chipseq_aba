@@ -65,6 +65,31 @@ intersectBed -a macs2_out/cocit_peaks.bed -b ./macs2_out/Unknown_CE349-003R0004_
 intersectBed -a macs2_out/cocitaba_peaks.bed -b ./macs2_out/Unknown_CE349-003R0006_peaks.bed -v > macs2_out/IDR/cocitaba_003R0006_NOintersect.bed
 intersectBed -a macs2_out/cocitaba_peaks.bed -b ./macs2_out/Unknown_CE349-003R0008_peaks.bed -v > macs2_out/IDR/cocitaba_003R0008_NOintersect.bed
 
+## CORRELOGRAMs for mapped BAMs considering only peak regions
+multiBamSummary BED-file --BED ./macs2_out/IDR/cocit_idr_gsMask10.bed \
+      --bamfiles mapped/Unknown_CE349-003R0001.sorted.bam mapped/Unknown_CE349-003R0003.sorted.bam  \
+      mapped/Unknown_CE349-003R0002.sorted.bam mapped/Unknown_CE349-003R0004.sorted.bam \
+      mapped/Unknown_CE349-003R0003.sorted.bam mapped/Unknown_CE349-003R0005.sorted.bam \
+      mapped/Unknown_CE349-003R0006.sorted.bam mapped/Unknown_CE349-003R0008.sorted.bam \
+      --outFileName ./mapped/multiBamArray_peaks.npz \
+      --extendReads=150 -p 6 \
+      --labels cocit_input_rep1 cocit_input_rep2 cocit_rep1 cocit_rep2 cocitaba_input_rep1 cocitaba_input_rep2 cocitaba_rep1 cocitaba_rep2
+
+plotCorrelation --corData ./mapped/multiBamArray_peaks.npz \
+      --plotFile ./mapped/multiBamArray_peaks_correl.pdf --outFileCorMatrix ./mapped/multiBamArray_peaks_correl_mx.txt \
+      --whatToPlot heatmap --corMethod pearson --plotNumbers --removeOutliers
+
+## ENRICHMENT in PEAKS
+plotEnrichment --bamfiles mapped/Unknown_CE349-003R0001.sorted.bam mapped/Unknown_CE349-003R0003.sorted.bam \
+  mapped/Unknown_CE349-003R0002.sorted.bam mapped/Unknown_CE349-003R0004.sorted.bam \
+  mapped/Unknown_CE349-003R0003.sorted.bam mapped/Unknown_CE349-003R0005.sorted.bam \
+  mapped/Unknown_CE349-003R0006.sorted.bam mapped/Unknown_CE349-003R0008.sorted.bam \
+  --labels cocit_input_rep1 cocit_input_rep2 cocit_rep1 cocit_rep2 cocitaba_input_rep1 cocitaba_input_rep2 cocitaba_rep1 cocitaba_rep2 \
+  --BED ./macs2_out/IDR/cocit_idr_gsMask10.bed \
+  --extendReads 150 \
+  --plotFileFormat pdf \
+  -o macs2_out/IDR/enrichment_at_peaks.pdf -p 6
+
 conda deactivate
 
 ## See here for interpretation of figures and further quality checks with creation of pseudoreplicates:

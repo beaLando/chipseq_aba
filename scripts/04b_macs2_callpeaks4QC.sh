@@ -4,9 +4,9 @@
 
 
 ## CASE1: subsampling distributes reads equally to subsampled rep1 and rep2 of cocit samples
-mkdir ./macs2_out/2677917_reads
-mkdir ./macs2_out/2677917_reads/noMask_qval10
-mkdir ./macs2_out/2677917_reads/gsMask_qval10
+mkdir -p ./macs2_out/2677917_reads
+mkdir -p ./macs2_out/2677917_reads/noMask_qval10
+mkdir -p ./macs2_out/2677917_reads/gsMask_qval10
 
 raw_bam_dir="mapped"
 downsamp_bam_dir1="${raw_bam_dir}/downsampled_ramp/2677917_reads"
@@ -28,7 +28,7 @@ imm=(${imm1} ${imm2})
 for rep in "${imm[@]}"; do
 
     if [[ ! -f "${macs_out}/${rep}_peaks.narrowPeak" ]]; then
-         macs2 callpeak -t ${downsamp_bam_dir1}/${rep}.dwnsmp.sorted.bam -c ${inpt} -f BAM --keep-dup auto --nomodel --extsize 250 -g 101274395 --outdir ${macs_out} -n ${rep}
+         macs2 callpeak -t ${downsamp_bam_dir1}/${rep}.dwnsmp.sorted.bam -c ${inpt} -f BAM --keep-dup auto --nomodel --extsize 150 -g 119482012 --outdir ${macs_out} -n ${rep}
     fi
 
     # remove all peaks that do not have an average base pair q-value <=10^(-${q})
@@ -43,7 +43,7 @@ done
 imm="${downsamp_bam_dir1}/${imm1}.dwnsmp.sorted.bam ${downsamp_bam_dir1}/${imm2}.dwnsmp.sorted.bam"
 
 if [[ ! -f "${macs_out}/cocit_peaks.narrowPeak" ]]; then
-     macs2 callpeak -t ${imm} -c ${inpt} -f BAM --keep-dup auto --nomodel --extsize 250 -g 101274395 --outdir ${macs_out} -n "cocit"
+     macs2 callpeak -t ${imm} -c ${inpt} -f BAM --keep-dup auto --nomodel --extsize 150 -g 119482012 --outdir ${macs_out} -n "cocit"
 fi
 
 # remove all peaks that do not have an average base pair q-value <=10^(-${q})
@@ -55,15 +55,15 @@ bedtools intersect -v -wa -a ${macs_out}/noMask_qval${q}/cocit_peaks.narrowPeak 
 
 ## CASE2: subsampling distributes reads differently to subsampled rep1 and rep2 of cocit samples
 ### NB: I can use previously downsampled files
-mkdir ./mapped/downsampled_ramp/r1_4405927_r2_949907_reads
-cp ./mapped/downsampled_ramp/4405927_reads/Unknown_CE349-003R0002.dwnsmp.sorted.bam ./mapped/downsampled_ramp/r1_4405927_r2_949907_reads/
-cp ./mapped/downsampled_ramp/4405927_reads/Unknown_CE349-003R0002.dwnsmp.sorted.bam.bai ./mapped/downsampled_ramp/r1_4405927_r2_949907_reads/
-cp ./mapped/downsampled_ramp/949907_reads/Unknown_CE349-003R0004.dwnsmp.sorted.bam ./mapped/downsampled_ramp/r1_4405927_r2_949907_reads/
-cp ./mapped/downsampled_ramp/949907_reads/Unknown_CE349-003R0004.dwnsmp.sorted.bam.bai ./mapped/downsampled_ramp/r1_4405927_r2_949907_reads/
+#mkdir -p ./mapped/downsampled_ramp/r1_4405927_r2_949907_reads
+#cp ./mapped/downsampled_ramp/4405927_reads/Unknown_CE349-003R0002.dwnsmp.sorted.bam ./mapped/downsampled_ramp/r1_4405927_r2_949907_reads/
+#cp ./mapped/downsampled_ramp/4405927_reads/Unknown_CE349-003R0002.dwnsmp.sorted.bam.bai ./mapped/downsampled_ramp/r1_4405927_r2_949907_reads/
+#cp ./mapped/downsampled_ramp/949907_reads/Unknown_CE349-003R0004.dwnsmp.sorted.bam ./mapped/downsampled_ramp/r1_4405927_r2_949907_reads/
+#cp ./mapped/downsampled_ramp/949907_reads/Unknown_CE349-003R0004.dwnsmp.sorted.bam.bai ./mapped/downsampled_ramp/r1_4405927_r2_949907_reads/
 
-mkdir ./macs2_out/r1_4405927_r2_949907_reads
-mkdir ./macs2_out/r1_4405927_r2_949907_reads/noMask_qval10
-mkdir ./macs2_out/r1_4405927_r2_949907_reads/gsMask_qval10
+mkdir -p ./macs2_out/r1_4405927_r2_949907_reads
+mkdir -p ./macs2_out/r1_4405927_r2_949907_reads/noMask_qval10
+mkdir -p ./macs2_out/r1_4405927_r2_949907_reads/gsMask_qval10
 
 raw_bam_dir="mapped"
 downsamp_bam_dir1="${raw_bam_dir}/downsampled_ramp/r1_4405927_r2_949907_reads"
@@ -85,7 +85,7 @@ imm=(${imm1} ${imm2})
 for rep in "${imm[@]}"; do
 
     if [[ ! -f "${macs_out}/${rep}_peaks.narrowPeak" ]]; then
-         macs2 callpeak -t ${downsamp_bam_dir1}/${rep}.dwnsmp.sorted.bam -c ${inpt} -f BAM --keep-dup auto --nomodel --extsize 250 -g 101274395 --outdir ${macs_out} -n ${rep}
+         macs2 callpeak -t ${downsamp_bam_dir1}/${rep}.dwnsmp.sorted.bam -c ${inpt} -f BAM --keep-dup auto --nomodel --extsize 150 -g 119482012 --outdir ${macs_out} -n ${rep}
     fi
 
     # remove all peaks that do not have an average base pair q-value <=10^(-${q})
@@ -100,7 +100,7 @@ done
 imm="${downsamp_bam_dir1}/${imm1}.dwnsmp.sorted.bam ${downsamp_bam_dir1}/${imm2}.dwnsmp.sorted.bam"
 
 if [[ ! -f "${macs_out}/cocit_peaks.narrowPeak" ]]; then
-     macs2 callpeak -t ${imm} -c ${inpt} -f BAM --keep-dup auto --nomodel --extsize 250 -g 101274395 --outdir ${macs_out} -n "cocit"
+     macs2 callpeak -t ${imm} -c ${inpt} -f BAM --keep-dup auto --nomodel --extsize 150 -g 119482012 --outdir ${macs_out} -n "cocit"
 fi
 
 # remove all peaks that do not have an average base pair q-value <=10^(-${q})

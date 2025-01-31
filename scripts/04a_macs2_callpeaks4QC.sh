@@ -50,7 +50,7 @@ for d in $downsamp_bam_dir1/*; do
         for rep in "${imm[@]}"; do
 
                     if [[ ! -f "${macs_out}/${rep}_peaks.narrowPeak" ]]; then
-                       macs2 callpeak -t ${d}/${rep}.dwnsmp.sorted.bam -c ${inpt} -f BAM --keep-dup auto --nomodel --extsize 250 -g 101274395 --outdir ${macs_out} -n ${rep}
+                       macs2 callpeak -t ${d}/${rep}.dwnsmp.sorted.bam -c ${inpt} -f BAM --keep-dup auto --nomodel --extsize 150 -g 119482012 --outdir ${macs_out} -n ${rep}
                     fi
 
                     # remove all peaks that do not have an average base pair q-value <=10^(-${q})
@@ -94,7 +94,7 @@ for d in $downsamp_bam_dir1/*; do
             # run MACS2
         
             if [[ ! -f "${macs_out}/${trt}_peaks.narrowPeak" ]];then
-        	    macs2 callpeak -t ${imm} -c ${inpt} -f BAM --keep-dup auto --nomodel --extsize 250 -g 101274395 --outdir ${macs_out} -n ${trt}
+        	    macs2 callpeak -t ${imm} -c ${inpt} -f BAM --keep-dup auto --nomodel --extsize 150 -g 119482012 --outdir ${macs_out} -n ${trt}
 	        fi
         
                 awk -F"\t" -v q=${q} 'BEGIN{OFS="\t"} $9>=q && $1!="ChrC" && $1!="ChrM"{print}' ${macs_out}/${trt}_peaks.narrowPeak > ${macs_out}/noMask_qval${q}/${trt}_peaks.narrowPeak
