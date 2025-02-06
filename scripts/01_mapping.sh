@@ -105,3 +105,24 @@ conda deactivate mapping
 conda activate chippy
 multiqc -ip -f ./qc_out/*_fastqc.zip ./qc_out/*.dupmrkdQC.txt #./mapping/*_qualimap ##donwload qualimap results separately
 conda deactivate
+
+
+
+# SAVE READS that OVERLAP GREENSCREEN (in case you want to check what they are)
+# create output directory for reads that do and do not overlap greenscreen regions
+greenscreen_regions="ara_refs/arabidopsis_greenscreen_20inputs.bed"
+
+mkdir -p mapped/greenscreen_mask
+mkdir -p mapped/greenscreen_regions
+
+while read line; do
+    samp=`echo $line | cut -d "," -f1`
+    if [[ "$samp" != "SampleID" ]]; then
+       index_bam="mapped/greenscreen_mask/${samp}.sorted.bam.bai"
+	if [[ ! -f "$index_bam" ]]; then
+            bedtools intersect -ubam -v -a mapped/${samp}.sorted.bam -b ara_refs/arabidopsis_greenscreen_20inputs.bed > mapped/greenscreen_regions/${samp}.sorted.bam
+            bedtools intersect -ubam -a mapped/${samp}.sorted.bam -b ara_refs/arabidopsis_greenscreen_20inputs.bed > mapped/greenscreen_mask/${samp}.sorted.bam 
+    	    samtools index mapped/greenscreen_mask/${samp}.sorted.bam
+        fi
+    fi
+done < sampleIDs.csv

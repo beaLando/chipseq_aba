@@ -1,3 +1,4 @@
+# LIBRARIES
 library(Gviz)
 library(org.At.tair.db)
 library(AnnotationDbi)
@@ -9,34 +10,26 @@ options(ucscChromosomeNames=FALSE)
 # IMPORT BMP-scaled PEAK PROFILES for FT REGION
 ### SUC2CO
 #### Peaks
-cocit <- DataTrack(range = "./output/mapped/Unknown_CE349-003R000_cocit_AVG.sorted.bw",
+cocit <- DataTrack(range = "./output/qc_out/mapped/Unknown_CE349-003R000_cocit_AVG.sorted.bw",
                    genome = "tair10",
                    type = "hist",
-                   #window = -1, 
                    windowSize = 5,
                    col ='red',
                    fill = "red",
-                   #alpha = 0.7,
-                   name = "SUC2CO",
-                   transformation = function(x) { log(x + 0.00001) },
-                   ylim=c(0,2)
-                   )
+                   alpha = 0.7,
+                   name = "SUC2CO")
 
 plotTracks(cocit, chromosome = "NC_003070.9", from = 24330000, to = 24335000)
 
 #### Inputs
-cocit.input <- DataTrack(range = "./output/mapped/Unknown_CE349-003R000_cocitInput_AVG.sorted.bw", 
+cocit.input <- DataTrack(range = "./output/qc_out/mapped/Unknown_CE349-003R000_cocitInput_AVG.sorted.bw", 
                          genome = "tair10", 
                          type = "hist", 
-                         #window = -1, 
                          windowSize = 5,
                          col ='black',
                          fill = "black",
-                         #alpha = 0.7,
-                         name = "SUC2CO",
-                         transformation = function(x) { log(x + 0.00001) },
-                         ylim=c(0,2)
-                         )
+                         alpha = 0.7,
+                         name = "SUC2CO")
 
 cocit2 <- OverlayTrack(trackList = list(cocit.input, cocit))
 plotTracks(cocit2, 
@@ -44,42 +37,33 @@ plotTracks(cocit2,
 
 ### SUC2CO-aba
 #### Peaks
-cocitaba <- DataTrack(range = "./output/mapped/Unknown_CE349-003R000_cocitaba_AVG.sorted.bw",
+cocitaba <- DataTrack(range = "./output/qc_out/mapped/Unknown_CE349-003R000_cocitaba_AVG.sorted.bw",
                    genome = "tair10",
                    type = "hist",
-                   #window = -1, 
                    windowSize = 5,
                    col ='blue',
                    fill = "blue",
-                   #alpha = 0.7,
-                   transformation = function(x) { log(x + 0.00001) },
-                   name = "SUC2CO-aba",
-                   ylim=c(0,2)
-)
+                   alpha = 0.7,
+                   name = "SUC2CO-aba")
 
 plotTracks(cocitaba, chromosome = "NC_003070.9", from = 24330000, to = 24335000)
 
 #### Inputs
-cocitaba.input <- DataTrack(range = "./output/mapped/Unknown_CE349-003R000_cocitabaInput_AVG.sorted.bw", 
+cocitaba.input <- DataTrack(range = "./output/qc_out/mapped/Unknown_CE349-003R000_cocitabaInput_AVG.sorted.bw", 
                          genome = "tair10", 
                          type = "hist", 
-                         #window = -1, 
                          windowSize = 5,
                          col ='black',
                          fill = "black",
-                         #alpha = 0.7,
-                         transformation = function(x) { log(x + 0.00001) },
-                         name = "SUC2CO-aba",
-                         ylim=c(0,2)
-)
+                         alpha = 0.7,
+                         name = "SUC2CO-aba")
 
 cocitaba2 <- OverlayTrack(trackList = list(cocitaba.input, cocitaba))
 plotTracks(cocitaba2, 
            chromosome = "NC_003070.9", from = 24330000, to = 24335000)
 
 plotTracks(c(cocit2, cocitaba2), 
-           chromosome = "NC_003070.9", from = 24330000, to = 24335000,
-           ylim=c(0.09,1.5))
+           chromosome = "NC_003070.9", from = 24330000, to = 24335000)
 
 
 
@@ -100,11 +84,11 @@ plotTracks(c(axisTrack, cocit2, cocitaba2, annot.track),
            chromosome = "NC_003070.9", from = 24327000, to = 24337000)
 
 
-# IMPORT IDR BED FILE (ours) + IMPORT de los Reyes BED FILEù
-suc2co.pks <- read.delim("./output/macs2_out/IDR/cocit_idr_gsMask10.bed", 
+# IMPORT IDR BED FILE (ours) + IMPORT de los Reyes BED FILE
+suc2co.pks <- read.delim("./output/macs2_out/IDR/cocit_idr01_gsMask.bed", 
                            header=FALSE)
 
-suc2co_aba.pks <- read.delim("./output/macs2_out/IDR/cocitaba_idr_gsMask10.bed", 
+suc2co_aba.pks <- read.delim("./output/macs2_out/IDR/cocitaba_idr01_gsMask.bed", 
                            header=FALSE)
 
 s35co.pks <- read.delim("./data/delosReyes2024/GSE222657_35SCO_peaks.narrowpeak", 
@@ -169,11 +153,12 @@ co10.track <- GeneRegionTrack(GRanges(seqnames = co10.pks$V1,
 
 plotTracks(c(axisTrack, annot.track, cocit2, cocitaba2, suc2co.track, suc2co_aba.track, s35co.track, co10.track), 
            sizes = c(0.1,0.10,0.15,0.15,0.05,0.05,0.05,0.05),
+           #ylim=c(0, 5), #activate for not scaled
            chromosome = "NC_003070.9", from = 24328000, to = 24337000)
 
 plotTracks(c(axisTrack, annot.track, cocit2, cocitaba2, suc2co.track, suc2co_aba.track, s35co.track, co10.track), 
            sizes = c(0.1,0.10,0.15,0.15,0.05,0.05,0.05,0.05),
            type = "l",
-           ylim=c(0, 1.5),
+           #ylim=c(0, 5), #activate for not scaled
            lwd = 2,
            chromosome = "NC_003070.9", from = 24328000, to = 24337000)

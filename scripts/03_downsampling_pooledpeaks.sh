@@ -19,17 +19,6 @@ minIndex(){
 
 }
 
-
-## With a single replicate: there is no need to downsample anything 
-#single_rep=("FD_S_2019_Mock" 
-#"FD_ft10_tsf1_S_2019_Mock")
-#for samp in "${single_rep[@]}"; do
-#  cp ${in_dir}/${samp}_R1.dupmark.sorted.bam \
-#    ${out_dir}/${samp}_R1.dupmark.sorted.bam
-#  cp ${in_dir}/${samp}_R1.dupmark.sorted.bam.bai \
-#    ${out_dir}/${samp}_R1.dupmark.sorted.bam.bai
-#done
-
 # Downsample given two reps
 dos2unix ./qc_out/chipqc_all/chip_readsize_fragsize.csv
 my_array=( $(cut -d ";" -f4 ./qc_out/chipqc_all/chip_readsize_fragsize.csv | sort -u) )

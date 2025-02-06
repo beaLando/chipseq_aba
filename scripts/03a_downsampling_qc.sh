@@ -1,5 +1,4 @@
-# This generates files that can be used instead of files generated at step 5a
-# In this case I downsample all samples to a minimum value, instead of downsampling one of two samples in pair of replicates to equalize read depth between replicates
+# I downsample all samples to a minimum value, instead of downsampling one of two samples in pair of replicates to equalize read depth between replicates
 # This step is to do a quality check and see if similar peaks are identified at low depths, given we have samples with very low depths
 
 conda activate chippy
@@ -40,7 +39,8 @@ for dpth in "${my_array_dpth[@]}"; do
 done
 
 
-## Also subsample to have in total between the two cocit samples the same number of mapped reads as the number of mapped reads for the two cocitaba samples together
+## Another way to do this is to subsample to have, in total between the two cocit replicates, the same number of mapped reads as the number of mapped reads for the two cocitaba replicates together
+
 dpth4=2677917 #(dpth1+dpth2)/2
 samp1="Unknown_CE349-003R0002"
 samp2="Unknown_CE349-003R0004"
