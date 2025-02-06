@@ -151,6 +151,8 @@ suc2co_annot <- data.frame(peakAnno.suc2co@anno)
 co35s_annot <- data.frame(peakAnno.co35s@anno)
 co10_annot <- data.frame(peakAnno.co10@anno)
 
+write.csv(suc2co_annot, "output/peak_annotation/suc2co_filteredpeaks_annotated.csv")
+
 ### Get IDs
 ids.suc2co <- unique(suc2co_annot$geneId)
 ids.co35s <- unique(co35s_annot$geneId)
